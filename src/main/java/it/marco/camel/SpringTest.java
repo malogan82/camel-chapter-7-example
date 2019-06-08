@@ -32,7 +32,9 @@ public class SpringTest {
 			LOGGER.info("MAIN STARTED");
 			ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
 			producerTemplate.sendBodyAndHeader("direct:start", "World", "JMSReplyTo", "queue:bar");
-			LOGGER.info("MESSAGE SENT");
+			LOGGER.info("FIRST MESSAGE SENT");
+			producerTemplate.sendBody("activemq:queue:foo-bean", "World");
+			LOGGER.info("SECOND MESSAGE SENT");
 			try {
 				main.stop();
 			} catch (Exception e) {

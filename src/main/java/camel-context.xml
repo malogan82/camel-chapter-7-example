@@ -12,6 +12,7 @@
     <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
+    <bean class="it.marco.camel.beans.Foo" id="foo"/>
     <camelContext id="camel-context-jaxb" xmlns="http://camel.apache.org/schema/spring">
     	<route>
 		  <from uri="direct:start"/>
@@ -25,6 +26,11 @@
 		</route>
 		<route>
    		  <from uri="activemq:queue:bar?disableReplyTo=true"/>
+   		  <log message="${body}"/>
+   		</route>
+   		<route>
+   		  <from uri="activemq:queue:foo-bean"/>
+   		  <inOnly uri="bean:foo"/>
    		  <log message="${body}"/>
    		</route>
     </camelContext>
